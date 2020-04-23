@@ -20,10 +20,14 @@ Route::get('/', function () {
 // Display all the articles
 Route::get('/restaurants', 'RestaurantController@index');
 // Show the form in order to create an article
-Route::get('/restaurant/create','RestaurantController@create');
-
-// Show the form in order to create an article
 Route::get('/restaurant/show/{id}','RestaurantController@show');
+
+
+Auth::routes();
+
+Route::group(['middleware' => 'auth'],function(){
+// Show the form in order to create an article
+Route::get('/restaurant/create','RestaurantController@create');
 // Post/public the article
 Route::post('/restaurant/create','RestaurantController@store');
 // Show the form of an article
@@ -33,3 +37,6 @@ Route::patch('/restaurant/edit/{id}','RestaurantController@update');
 // Delete a specific article
 Route::delete('/restaurant/{id}',function($id){
 });
+});
+
+Route::get('/home', 'HomeController@index')->name('home');
